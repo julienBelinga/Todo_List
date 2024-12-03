@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/components/DialogBox.dart';
 import 'package:todo_list/components/TodoTile.dart';
 
 void main() {
@@ -52,6 +53,7 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             // Action à effectuer lors de l'appui sur le bouton
+            DialogBox();
           },
           backgroundColor: Colors.amber,
           child: const Icon(Icons.add),
