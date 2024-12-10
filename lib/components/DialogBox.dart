@@ -1,30 +1,15 @@
 import 'package:flutter/material.dart';
 
-class DialogBox extends StatefulWidget {
-  @override
-  _DialogBoxState createState() => _DialogBoxState();
-}
-
-class _DialogBoxState extends State<DialogBox> {
-
-  void AddTask(){}
+class DialogBox extends StatelessWidget {
+  const DialogBox({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Add a task"),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          TextField(
-            decoration: InputDecoration(hintText: Text("write your task"),
-          ),
-        ],
+      backgroundColor: Colors.amber[300],
+      content: Container(
+        height: 120,
       ),
-      actions: <Widget[
-        TextButton(onPressed: AddTask(), child: const Text("Add")),
-        TextButton(onPressed: () {Navigator.of(context).pop();}, child: const Text("cancel")),
-      ],
     );
   }
 }
