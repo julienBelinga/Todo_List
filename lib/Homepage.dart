@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:todo_list/components/DialogBox.dart';
 import 'package:todo_list/components/TodoTile.dart';
+import 'package:todo_list/data/database.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +12,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // reference to HIVE box
+  var _myBox = Hive.box('myBox');
+  toDoDataBase db = toDoDataBase();
+
+  @override
+  void initState() {
+    // if is the 1st time ever opening the app
+    if (_myBox.get("TODOLIST") == null) {
+      db.createInitialData();
+    } else {
+      db.loadData();
+    }
+
+    super.initState();
+  }
+
   List todoList = [
     ["task n°1", false],
     ["task n°2", false]
