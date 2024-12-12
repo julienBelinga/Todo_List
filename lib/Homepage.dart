@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:todo_list/components/DialogBox.dart';
 import 'package:todo_list/components/TodoTile.dart';
 
-void main() {
-  runApp(const HomePage());
-}
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -19,17 +15,29 @@ class _HomePageState extends State<HomePage> {
     ["task n°2", false]
   ];
 
+  final _controller = TextEditingController();
+
   void checkBoxChanged(bool? value, int index) {
     setState(() {
       todoList[index][1] = value;
     });
   }
 
-  void CreateTask() {
+  void saveNewTask() {
+    setState(() {
+      todoList.add([_controller.text, false]);
+    });
+    Navigator.of(context).pop();
+  }
+
+  void createTask() {
     showDialog(
         context: context,
         builder: (context) {
-          return DialogBox();
+          return DialogBox(
+            controller: _controller,
+            onSave: saveNewTask,
+          );
         });
   }
 
@@ -57,7 +65,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: CreateTask,
+        onPressed: createTask,
         backgroundColor: Colors.amber,
         child: const Icon(Icons.add),
       ),
