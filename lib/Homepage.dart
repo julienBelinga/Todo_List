@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     // if is the 1st time ever opening the app
-    if (_myBox.get("db.toDoList") == null) {
+    if (_myBox.get("TODOLIST") == null) {
       db.createInitialData();
     } else {
       db.loadData();
