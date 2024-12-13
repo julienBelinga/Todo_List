@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     // if is the 1st time ever opening the app
-    if (_myBox.get("TODOLIST") == null) {
+    if (_myBox.get("db.toDoList") == null) {
       db.createInitialData();
     } else {
       db.loadData();
@@ -28,25 +28,22 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  List todoList = [
-    ["task n°1", false],
-    ["task n°2", false]
-  ];
-
   final _controller = TextEditingController();
 
   void checkBoxChanged(bool? value, int index) {
     setState(() {
-      todoList[index][1] = value;
+      db.toDoList[index][1] = value;
     });
+    db.updateData();
   }
 
   void saveNewTask() {
     setState(() {
-      todoList.add([_controller.text, false]);
+      db.toDoList.add([_controller.text, false]);
       _controller.clear();
     });
     Navigator.of(context).pop();
+    db.updateData();
   }
 
   void createTask() {
@@ -62,8 +59,9 @@ class _HomePageState extends State<HomePage> {
 
   void deleteTask(int index) {
     setState(() {
-      todoList.removeAt(index);
+      db.toDoList.removeAt(index);
     });
+    db.updateData();
   }
 
   @override
@@ -80,11 +78,11 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
       ),
       body: ListView.builder(
-        itemCount: todoList.length,
+        itemCount: db.toDoList.length,
         itemBuilder: (context, index) {
           return TodoTile(
-            taskName: todoList[index][0],
-            isTaskcompleted: todoList[index][1],
+            taskName: db.toDoList[index][0],
+            isTaskcompleted: db.toDoList[index][1],
             onChanged: (value) => checkBoxChanged(value, index),
             deleteFunction: (context) => deleteTask(index),
           );
